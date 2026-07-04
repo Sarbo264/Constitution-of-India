@@ -12,6 +12,10 @@ if not keyword.isdigit():
 elif keyword == '238':
     print("This Article does not Exist.")
     print("Try Again with another Article Number.")
+# Excluding Negative numbers and those numbers which are greater than 395 since 395 is the last Article number.
+elif int(keyword) < 1 or int(keyword) > 395:
+    print("Invalid Article Number.")
+    print("Please Try Again")
 # Working with those Articles which does not satisfy those above conditions.
 else:
     # Declaring an empty String.
