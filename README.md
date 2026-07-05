@@ -1,23 +1,29 @@
-# NAME OF THE PROJECT
-Constitution-Article-Extractor
+# 🇮🇳 Constitution of India - Article Engine
 
-# USE OF THE PROJECT
-This Project gives the Description of the Articles as per the requirement of the User.
+[Python]
+[Streamlit]
+[PyPDF2]
 
-# PROGRAMMING LANGUAGE USED IN THIS PROJECT
-For making the project succesful, Python is used in making this project.
+## 📖 Overview
+The **Constitution of India Article Engine** is a fast, dynamic web application built entirely in Python. Designed with a clean user interface, this tool allows users to seamlessly search, extract, and read specific articles from the Indian Constitution without the hassle of manually scrolling through massive PDF documents. 
 
-# LIBRARY USED IN THE PROJECT
-For making the projrct succesful, PyPDF2 (which is a Python Library) is the library which is being used.
+## 🚀 Live Demo
+Experience the live application here: **[Article Engine on Render](https://constitution-of-india.onrender.com)**
 
-# INPUT ASKED FROM THE USER
-The input which is asked from the user is only the Article Number, any other inputs are being discouraged.
+---
 
-# EXAMPLE 
-Input:
-Enter the Article Number you want to find the Description: 9
-Output:
-9. Persons voluntarily acquiring citizenship of a foreign State not to be citizens.—No person shall be a citizen of India by virtue of article 5, or be deemed to be a citizen of India by virtue of article 6 or article 8, if he has voluntarily acquired the citizenship of any foreign State.
+## ✨ Key Features
+* **Instant Extraction:** Enter any Article number and instantly retrieve the exact legal text.
+* **Robust PDF Parsing:** Utilizes `PyPDF2` to read, isolate, and extract specific text blocks from complex legal documents securely in the background.
+* **Continuous Deployment:** Fully integrated with GitHub and hosted on Render cloud architecture for automatic updates.
 
-# USES OF THIS PROJECT
-This Project is useful for those users who are curious about the Constituition of India and wants to know about all the Articles in our Nation.
+---
+
+## 🛠️ Technology Stack
+* **Core Language:** Python 3
+* **Frontend & Backend Framework:** [Streamlit]
+* **Document Processing:** PyPDF2
+* **Version Control:** Git & GitHub
+* **Cloud Infrastructure:** Render
+
+---
