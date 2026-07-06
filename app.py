@@ -4,6 +4,9 @@ import streamlit as st
 from Program import extraction, read_markdown_file
 # Main Function
 def main():
+    st.set_page_config(
+        page_title = "THE ARTICLE ENGINE",
+        page_icon = "📜",)
     # Storing the Search History
     if 'search_history' not in st.session_state:
         st.session_state.search_history = []
