@@ -30,11 +30,11 @@ def extraction (keyword):
         # Using try for handling Formating error and handling unexpected crashesh.
         try:
             # Declaring a variable to find the index of the keyword in the text variable.
-            index1 = text.index(' ' + keyword + '.')
+            index1 = text.index(keyword + '.')
             # Making logics for the Article Numbers apart from the Last Article number which is 395.
             if keyword != '395':
                 # Declaring a variable to find the index of the next keyword in the text variable.
-                index2 = text.index(' ' + str(int(keyword)+1)+ '.')
+                index2 = text.index(str(int(keyword)+1)+ '.')
                 # Returning the text from the index1 to index2 which will give the description of the Article Number entered by the User.
                 return text[index1:index2]
             # Making logic for the Article number 395.
@@ -43,6 +43,9 @@ def extraction (keyword):
                 return text[index1:]
         except:
             return f'Formatting error: Could not locate the {keyword} in the PDF file.'
-
+    # Adding a function for reading .md Files.
+def read_markdown_file(markdown_file):
+    with open(markdown_file, 'r', encoding = 'utf-8') as file:
+        return file.read()
 if __name__ == '__main__':
     main()
