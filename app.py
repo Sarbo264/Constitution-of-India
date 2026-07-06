@@ -4,6 +4,7 @@ import streamlit as st
 from Program import extraction, read_markdown_file
 # Main Function
 def main():
+    # Making the Page Configurations of the Webpage
     st.set_page_config(
         page_title = "THE ARTICLE ENGINE",
         page_icon = "📜",)
@@ -50,6 +51,8 @@ def main():
             # For those Inputs which are Valid
             else:
                 st.write(output)
+    else:
+        st.succes("No Input found from the User.")
     # Making the Side Bar of the Webpage
     st.sidebar.header('Platform Guide ⚙️')
     st.sidebar.info('This engine extracts official legal text directly from the Constitution of India.')
