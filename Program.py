@@ -20,12 +20,12 @@ def extraction (keyword):
         try:
             # Finding the index number of the keyword in the articles_list
             article_index = articles_list.index(keyword)
-            # Finding the next article number.
-            next_article = articles_list[article_index + 1]
             # Finding the index number of the required article number in the text variable.
             index1 = text.index(keyword+'.')
             # Checking if the article number is not the last Article number in the Constitution.
             if keyword != articles_list[len(articles_list)-1]:
+                # Finding the next article number.
+                next_article = articles_list[article_index + 1]
                 # Finding the index number of the next_article in the text variable.
                 index2 = text.index(next_article+'.',index1 + len(keyword))
                 # Checking for Duplication in the Text Variable
