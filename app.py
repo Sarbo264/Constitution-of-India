@@ -48,7 +48,7 @@ def main():
         if not keyword:
             st.error("No Input found from the User.")
         else:
-            with st.spinner("Extracting: "):
+            with st.spinner(f"Extracting Article {keyword}: "):
                 # Calling the extraction function.
                 output = extraction(keyword)
             with st.container(border = True):
@@ -57,7 +57,7 @@ def main():
                     st.error(output)
                 # For those Inputs which are Valid
                 else:
-                    st.success("Extraction Complete.")
+                    st.success(f"Extraction Complete of Article {keyword}.")
                     st.text(output)
     # Making the Side Bar of the Webpage
     st.sidebar.header('Platform Guide ⚙️')
