@@ -1,5 +1,6 @@
 # Importing PdfReader from the Library PyPDF2
 from PyPDF2 import PdfReader
+import re
 # Creating a Function for Extracting the whole text from the pdf.
 def full_article ():
     # Declaring a Variable which will read the PDF
@@ -10,6 +11,10 @@ def full_article ():
     for i in range(len(reader.pages)):
         # Logic for extracting the text from each page and then adding it to the text variable.
         text = text + reader.pages[i].extract_text()
+    # Remove footnote markers like 1[, 2[, 3[
+    text = re.sub(r'\d+\[', '', text)        
+    # Remove Unicode superscripts if present  
+    text = re.sub(r'[⁰¹²³⁴⁵⁶⁷⁸⁹]+', '', text)  
     # Returning the text variable which contains all the text from the Pdf.
     return text
 
