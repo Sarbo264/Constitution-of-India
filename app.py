@@ -1,7 +1,11 @@
 # Importing Library Streamlit
 import streamlit as st
 # Importing Functions from the Program.py File
-from Program import extraction, read_markdown_file
+from Program import extraction
+# Importing Functions from the Text.py File
+from Text import read_markdown_file
+# Importing articles_list, Omitted_articles from ArticleList File
+from ArticleList import articles_list, Omitted_articles
 # Main Function
 def main():
     # Making the Page Configurations of the Webpage
@@ -21,17 +25,18 @@ def main():
     st.markdown(content)
     st.divider()
     # Declaring the Text Box and a Switch
-    col1, col2 = st.columns([6,1])
+    with st.form(key = 'Extraction', border = False):
+        col1, col2 = st.columns([6,1])
     # Making the Text Box
     with col1:
         keyword = st.text_input(
             label = 'Article Number',
-            placeholder = 'Enter the Article Number you want to find the Description(e.g., 9): ',
+            placeholder = 'Enter the Article Number you want to find the Description(e.g., 2A): ',
             label_visibility = 'collapsed',
         )
     # Making the Switch
     with col2:
-        press = st.button("EXTRACT", icon_position= 'right')
+        press = st.form_submit_button("EXTRACT", icon_position= 'right')
     if press:
         if keyword:
             # Storing the Article numbers to a Search History
@@ -40,31 +45,50 @@ def main():
     st.divider()
     # Making the Extracting Box
     if press:
-        with st.spinner("Extracting: "):
-            # Calling the extraction function.
-            output = extraction(keyword)
-        st.success("Extraction Complete.")
-        with st.container(border = True):
-            # For those Inputs which are either Invalid or the Article is Ommited from the Constituition
-            if 'Please Try Again.' in output:
-                st.error(output)
-            # For those Inputs which are Valid
-            else:
-                st.write(output)
-    else:
-        st.error("No Input found from the User.")
+        if not keyword:
+            st.error("No Input found from the User.")
+        else:
+            with st.spinner("Extracting: "):
+                # Calling the extraction function.
+                output = extraction(keyword)
+            with st.container(border = True):
+                # For those Inputs which are either Invalid or the Article is Ommited from the Constituition
+                if 'Please Try Again.' in output:
+                    st.error(output)
+                # For those Inputs which are Valid
+                else:
+                    st.success("Extraction Complete.")
+                    st.text(output)
     # Making the Side Bar of the Webpage
     st.sidebar.header('Platform Guide ⚙️')
     st.sidebar.info('This engine extracts official legal text directly from the Constitution of India.')
     st.sidebar.divider()
-    st.sidebar.caption('Rules: Only integers 1-395 accepted.')
-    st.sidebar.caption('No Inputs other than Whole Numbers are Accepted.')
+    st.sidebar.caption('Rules: Only Valid Article Numbers are Accepted.')
+    st.sidebar.caption('No Inputs other than Articles Numbers are not Encouraged.')
     st.sidebar.divider()
+    # Making Search History in the Side Bar.
     st.sidebar.subheader("Search History: ")
+    search_article = st.sidebar.text_input("Enter the Article Number to search in Search History: ")
+    if search_article in st.session_state.search_history and search_article in articles_list:
+        press_searchhistory = st.sidebar.button(f"Article No. {search_article}", width = 'stretch', key = 'Search_History')
+        if press_searchhistory:
+            with st.container(border = True):
+                st.text(extraction(search_article))
     # Logic for Search History
     if len(st.session_state.search_history) > 0:
         for i in reversed(st.session_state.search_history):
-            st.sidebar.code(f"Article No. {i}")
+            if i in articles_list:
+                press_sidebutton = st.sidebar.button(f"Article No. {i}", width = 'stretch')
+                if press_sidebutton:
+                    with st.container(border = True):
+                        st.text(extraction(i))
+            elif i in Omitted_articles:
+                press_sidebutton = st.sidebar.button(f"Article No. {i}", width = 'stretch')
+                if press_sidebutton:
+                    with st.container(border = True):
+                        st.text(extraction(i))
+            else:
+                st.sidebar.error(f"Invalid Input of {i}")          
     else:
         st.sidebar.code('No History Found')
 # Calling the Main Function
