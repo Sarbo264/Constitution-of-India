@@ -56,8 +56,11 @@ def main():
                 if 'Please Try Again.' in output:
                     st.error(output)
                 # For those Inputs which are Valid
-                else:
+                elif keyword in articles_list and keyword in Omitted_articles:
                     st.success(f"Extraction Complete of Article {keyword}.")
+                    st.error(output)
+                else:
+                    st.success(f"Exteraction Complete of Article {keyword}.")
                     st.text(output)
     # Making the Side Bar of the Webpage
     st.sidebar.header('Platform Guide ⚙️')
@@ -69,11 +72,14 @@ def main():
     # Making Search History in the Side Bar.
     st.sidebar.subheader("Search History: ")
     search_article = st.sidebar.text_input("Enter the Article Number to search in Search History: ")
-    if search_article in st.session_state.search_history and search_article in articles_list:
-        press_searchhistory = st.sidebar.button(f"Article No. {search_article}", width = 'stretch', key = 'Search_History')
+    if search_article in st.session_state.search_history and (search_article in articles_list or search_article in Omitted_articles):
+        press_searchhistory = st.sidebar.button(f"Article No. {search_article}", width = 'content')
         if press_searchhistory:
             with st.container(border = True):
-                st.text(extraction(search_article))
+                if (search_article in articles_list and search_article in Omitted_articles) or (search_article in Omitted_articles):
+                    st.error(extraction(search_article))
+                else:
+                    st.text(extraction(search_article))
     # Logic for Search History
     if len(st.session_state.search_history) > 0:
         for i in reversed(st.session_state.search_history):
@@ -81,12 +87,15 @@ def main():
                 press_sidebutton = st.sidebar.button(f"Article No. {i}", width = 'stretch')
                 if press_sidebutton:
                     with st.container(border = True):
-                        st.text(extraction(i))
+                        if i in Omitted_articles:
+                            st.error(extraction(i))
+                        else:
+                            st.text(extraction(i))
             elif i in Omitted_articles:
                 press_sidebutton = st.sidebar.button(f"Article No. {i}", width = 'stretch')
                 if press_sidebutton:
                     with st.container(border = True):
-                        st.text(extraction(i))
+                        st.error(extraction(i))
             else:
                 st.sidebar.error(f"Invalid Input of {i}")          
     else:
