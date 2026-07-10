@@ -39,7 +39,7 @@ def extraction (keyword):
             else:
                 # Returning the text from the index1 to the end of the text variable.
                 return text[index1:]
-        except:
+        except ValueError:
             return f'Formatting Error in the PDF.\n{keyword} not found in the PDF.\nPlease Try Again.'
     # Checking if the keyword is in the Omitted_articles or not.
     elif keyword in Omitted_articles:
