@@ -48,7 +48,7 @@ def main():
         if not keyword:
             st.error("No Input found from the User.")
         else:
-            with st.spinner(f"Extracting Article {keyword}: "):
+            with st.spinner(f"Extracting Article {keyword}: ", show_time=True):
                 # Calling the extraction function.
                 output = extraction(keyword)
             with st.container(border = True):
@@ -75,27 +75,39 @@ def main():
     if search_article in st.session_state.search_history and (search_article in articles_list or search_article in Omitted_articles):
         press_searchhistory = st.sidebar.button(f"Article No. {search_article}", width = 'content')
         if press_searchhistory:
-            with st.container(border = True):
-                if (search_article in articles_list and search_article in Omitted_articles) or (search_article in Omitted_articles):
-                    st.error(extraction(search_article))
-                else:
-                    st.text(extraction(search_article))
+            with st.spinner(f"Extracting Article No. {search_article}: ",show_time= True):
+                output = extraction(search_article)
+                with st.container(border = True):
+                    if (search_article in articles_list and search_article in Omitted_articles) or (search_article in Omitted_articles):
+                        st.success(f"Extraction Complete of Article {search_article}.")
+                        st.error(output)
+                    else:
+                        st.success(f"Extraction Complete of Article {search_article}.")
+                        st.text(output)
+    elif not search_article in st.session_state.search_history and (search_article in articles_list or search_article in Omitted_articles):
+        st.sidebar.warning(f"Warning!!!: Article No. {search_article} is not present in the Search History.")
     # Logic for Search History
     if len(st.session_state.search_history) > 0:
         for i in reversed(st.session_state.search_history):
             if i in articles_list:
                 press_sidebutton = st.sidebar.button(f"Article No. {i}", width = 'stretch')
                 if press_sidebutton:
-                    with st.container(border = True):
-                        if i in Omitted_articles:
-                            st.error(extraction(i))
-                        else:
-                            st.text(extraction(i))
+                    with st.spinner(f"Extracting Article No. {i}: ", show_time = True):
+                        output = extraction(i)
+                        with st.container(border = True):
+                            if i in Omitted_articles:
+                                st.success(f"Extraction Complete of Article {i}.")
+                                st.error(output)
+                            else:
+                                st.success(f"Extraction Complete of Article {i}.")
+                                st.text(output)
             elif i in Omitted_articles:
                 press_sidebutton = st.sidebar.button(f"Article No. {i}", width = 'stretch')
                 if press_sidebutton:
-                    with st.container(border = True):
-                        st.error(extraction(i))
+                    with st.spinner(f"Extracting Article No. {i}: ", show_time = True):
+                        output = extraction(i)
+                        with st.container(border = True):
+                            st.error(output)
             else:
                 st.sidebar.error(f"Invalid Input of {i}")          
     else:
